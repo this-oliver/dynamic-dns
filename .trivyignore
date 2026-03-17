@@ -1,0 +1,16 @@
+# This file is used to ignore specific vulnerabilities reported by Trivy. Each line 
+# can contain a CVE ID or other identifiers to be ignored.
+
+
+# Accept the risk
+#CVE-2018-14618
+
+# Accept the risk until 2023-01-01
+#CVE-2025-64756 exp:2023-01-01
+
+# Ignore misconfigurations
+#AVD-DS-0002
+
+# Ignore secrets
+#generic-unwanted-rule
+#aws-account-id
