@@ -40,7 +40,7 @@ Example:
 
 ```bash
 # update ip address for example.com using cloudflare provider with api token
-python main.py --provider cloudflare --token <API_TOKEN> --domain example.com
+python -m src.main --provider cloudflare --token <API_TOKEN> --domain example.com
 ```
 
 ## Configuration File
@@ -57,6 +57,12 @@ records:
 ```
 
 The example above will update the IP address for `example.com` using the Cloudflare provider with the specified API token.
+
+To run the script with the configuration file, use the following command:
+
+```bash
+python -m src.main --config path/to/config.yaml
+```
 
 ### Credits
 

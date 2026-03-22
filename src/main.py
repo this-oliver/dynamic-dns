@@ -8,9 +8,10 @@ This script is designed to update DNS records with the host's current IP address
 
 import argparse
 import logging
-from common.config import Config, parse_config
-from common.record import Record
-from utils.ip import get_ip_address
+from src.common.config import Config, parse_config
+from src.common.record import Record
+from src.providers.cloudflare import CloudflareProvider
+from src.utils.ip import get_ip_address
 
 logging.basicConfig(level=logging.INFO)
 
@@ -25,21 +26,31 @@ def main():
     if args.config:
         logging.info(f"Loading configuration from {args.config}")
         config = parse_config(args.config)
-    elif args.provider and args.token and args.domain:
-        record = Record(
-            domain_name=args.domain,
-            token=args.token,
-            provider=args.provider
-        )
+    elif args.provider and args.domain:
+        if args.provider.lower() == 'cloudflare' and not args.token:
+            logging.error("Cloudflare token is required when using Cloudflare provider.")
+            return
+        record = Record(provider=args.provider, domain_name=args.domain, token=args.token)
         config = Config(records=[record])
     else:
         logging.error("No valid configuration provided. Please specify either a config file or domain with records to update.")
         parser.print_help()
         return
+    
+    ip_address = get_ip_address()
 
     for record in config.records:
-        logging.info(f"Processing record for domain: {record.domain_name} with provider: {record.provider}")
+        if record.provider.lower() == 'cloudflare':
+            try:
+                provider = CloudflareProvider(token=record.token)
+                provider.update_dns_record(record, ip_address)
+                logging.info(f"Successfully updated {record.domain_name} with IP {ip_address} in {record.provider} DNS provider.")
+            except Exception as e:
+                logging.error(f"Failed to update {record.domain_name} in {record.provider} DNS provider: {str(e)}")
+        else:
+            logging.error(f"Failed to update {record.domain_name}: Unsupported provider {record.provider}")
 
+    logging.info("DNS record update process completed.")
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,8 @@
 import yaml
-from common.record import Record
+from src.common.record import Record
 
 class Config:
-    """Configuration class to hold all DNS records."""
+    """Class representing the configuration loaded from the YAML file."""
     def __init__(self, records):
         self.records = records
 
@@ -10,5 +10,5 @@ def parse_config(config_path):
     """Load configuration from a YAML file."""
     with open(config_path, 'r') as file:
         config = yaml.safe_load(file)
-    records = [Record(**record) for record in config['records']]
+    records = [Record(**record) for record in config.get('records', [])]
     return Config(records)

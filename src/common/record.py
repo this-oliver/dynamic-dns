@@ -1,9 +1,12 @@
 class Record:
-    """Base class for DNS records."""
-    def __init__(self, provider, domain_name):
-        self.provider = provider
-        self.domain_name = domain_name
-        if not self.provider:
+    """Class for DNS records."""
+    def __init__(self, provider, domain_name, token=None):
+        if not provider:
             raise ValueError("Provider is required for each record.")
-        if not self.domain_name:
+        if not domain_name:
             raise ValueError("Domain name is required for each record.")
+        self.provider = provider.lower()
+        self.domain_name = domain_name
+        self.token = token
+        if self.provider == 'cloudflare' and not self.token:
+            raise ValueError("Cloudflare token is required for Cloudflare records.")
