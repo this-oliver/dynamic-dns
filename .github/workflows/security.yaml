@@ -8,30 +8,15 @@ on:
     - cron: "30 2 * * *" # for scheduled security scans
 
 jobs:
-  check-dependencies:
+  check-sast:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
 
-      - name: Scan for vulnerable dependencies
-        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 # 0.33.1
+      - uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
         id: deps
         with:
           scan-type: fs
-          scanners: "vuln"
-          severity: "CRITICAL,HIGH"
-          exit-code: "1"
-
-  check-code:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
-
-      - name: Scan for vulnerable dependencies
-        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 # 0.33.1
-        id: deps
-        with:
-          scan-type: fs
-          scanners: "secret,misconfig"
+          scanners: "vuln,secret,misconfig"
           severity: "CRITICAL,HIGH"
           exit-code: "1"
