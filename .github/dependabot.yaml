@@ -21,8 +21,8 @@ updates:
       safe-updates-security:
         applies-to: security-updates
         update-types:
-          - patch
           - minor
+          - patch
 
   - package-ecosystem: "pip"
     directory: "/"
@@ -43,4 +43,27 @@ updates:
       safe-updates-security:
         applies-to: security-updates
         update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(dep): "
+    target-branch: "main"
+    labels:
+      - "dependencies"
+    # IMPORTANT: The group IDs are used in auto-merge workflow. Make sure to update the
+    # references in your workflow to match the group IDs if you decide to change them.
+    groups:
+      safe-updates-version:
+        applies-to: version-updates
+        update-types:
+          - patch
+      safe-updates-security:
+        applies-to: security-updates
+        update-types:
+          - minor
           - patch
