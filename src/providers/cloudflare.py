@@ -1,7 +1,12 @@
+import time
 import requests
-from ..common.provider import Provider
+from ..common.provider import Provider, UpdateResult
 
 BASE_URL="https://api.cloudflare.com/client/v4"
+
+def get_current_time():
+    """Helper function to get the current time in a human-readable format."""
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
 
 class CloudflareApiZone:
@@ -75,7 +80,7 @@ class CloudflareProvider(Provider):
                         return r 
         return None
     
-    def update_dns_record(self, record, ip_address):
+    def update_dns_record(self, record: CloudflareApiRecord, ip_address: str) -> dict:
         """Update the DNS record in Cloudflare with the new IP address."""
         cloudflare_record = self._get_single_dns_record(record)
         if not cloudflare_record:
@@ -88,11 +93,11 @@ class CloudflareProvider(Provider):
             json={
                 "type": cloudflare_record.type,
                 "name": cloudflare_record.name,
-                "content": ip_address,
                 "ttl": cloudflare_record.ttl,
-                "proxied": cloudflare_record.proxied
+                "content": ip_address,
+                "comment": f"Updated from [{cloudflare_record.content}] to [{ip_address}] via dynamic-dns at {get_current_time()}.",
             }
         )
         if res.status_code != 200:
             raise Exception(f"Failed to update DNS record in Cloudflare: {res.text}")
-        return res.json()
+        return UpdateResult(provider=self.name, old_ip=cloudflare_record.content, new_ip=ip_address)

@@ -43,8 +43,8 @@ def main():
         if record.provider.lower() == 'cloudflare':
             try:
                 provider = CloudflareProvider(token=record.token)
-                provider.update_dns_record(record, ip_address)
-                logging.info(f"Successfully updated {record.domain_name} with IP {ip_address} in {record.provider} DNS provider.")
+                result = provider.update_dns_record(record, ip_address)
+                logging.info(f"Successfully updated {record.domain_name} from {result.old_ip} to {result.new_ip} in {record.provider} DNS provider.")
             except Exception as e:
                 logging.error(f"Failed to update {record.domain_name} in {record.provider} DNS provider: {str(e)}")
         else:
