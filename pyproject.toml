@@ -1,0 +1,12 @@
+[project]
+name = "dynamic-dns"
+description = "keeps your dns A-records up to date!"
+readme = "README.md"
+keywords = ["dns", "dynamic-dns", "dyndns", "cloudflare"]
+
+[project.urls]
+Homepage = "https://github.com/this-oliver/dynamic-dns"
+Documentation = "https://github.com/this-oliver/dynamic-dns?tab=readme-ov-file#dynamic-dns"
+Repository = "https://github.com/this-oliver/dynamic-dns.git"
+"Bug Tracker" = "https://github.com/this-oliver/dynamic-dns/issues"
+Changelog = "https://github.com/this-oliver/dynamic-dns/blob/main/CHANGELOG.md"
