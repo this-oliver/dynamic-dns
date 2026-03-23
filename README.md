@@ -73,7 +73,7 @@ The command line above will update the DNS record for `example.com` using the Cl
 ### Docker
 
 > [!WARNING]
-> Always pin the image to a specific version or digest rather than using `latest` to ensure stability and avoid unexpected issues due to changes in the image.
+> Always pin the image to a specific digest instead of using `latest` to ensure stability and less exposure to supply chain attacks.
 
 You can also run `dynamic-dns` as a container if you do not want to set up a Python environment. To do this, pull the latest image from GitHub Container Registry or build it yourself.
 
@@ -83,16 +83,19 @@ Pull the latest image:
 # via GitHub Container Registry
 docker pull ghcr.io/this-oliver/dynamic-dns:latest
 
+# via GitHub Container Registry with a pinned tag
+docker pull ghcr.io/this-oliver/dynamic-dns:v1.0.0@sha256:01e32dc8587aadb8a769502f7b49fea661939d059d6ceed7034ef2986fa24170
+
 # build yourself
 git clone https://github.com/this-oliver/dynamic-dns.git
 cd dynamic-dns
-docker build -t dynamic-dns:local .
+docker build -t ghcr.io/this-oliver/dynamic-dns:local .
 ```
 
 Run the container:
 
 ```bash
-docker run -d -v /path/to/config.yaml:/app/config.yaml dynamic-dns:latest --config /app/config.yaml
+docker run -d -v /path/to/config.yaml:/app/config.yaml ghcr.io/this-oliver/dynamic-dns:v1.0.0@sha256:01e32dc8587aadb8a769502f7b49fea661939d059d6ceed7034ef2986fa24170 --config /app/config.yaml
 ```
 
 ## Practical Use Cases
