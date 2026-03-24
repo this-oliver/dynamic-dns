@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/this-oliver/dynamic-dns/compare/v1.0.0...v1.1.0) (2026-03-24)
+
+
+### Features
+
+* **cloudflare:** leaves comment with ip and timestamp after updating records ([#12](https://github.com/this-oliver/dynamic-dns/issues/12)) ([9ee7286](https://github.com/this-oliver/dynamic-dns/commit/9ee7286501c919d9344664c97e0a1c94e99742d5))
+
+
+### Bug Fixes
+
+* **cloudflare:** stop altering optional record fields ([#14](https://github.com/this-oliver/dynamic-dns/issues/14)) ([3c6c7ee](https://github.com/this-oliver/dynamic-dns/commit/3c6c7ee9c59d7743067a706f55dac26f7eb584f0))
+
 ## 1.0.0 (2026-03-22)
 
 
