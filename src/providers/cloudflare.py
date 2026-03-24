@@ -87,7 +87,7 @@ class CloudflareProvider(Provider):
             raise Exception(f"DNS record for {record.domain_name} not found in ${self.name}.")
         if cloudflare_record.type != 'A':
             raise Exception(f"DNS record type {cloudflare_record.type} is not supported for ip address updates. Only 'A' records can be updated with an IP address.")
-        res = requests.put(
+        res = requests.patch(
             f"{BASE_URL}/zones/{cloudflare_record.zone}/dns_records/{cloudflare_record.id}",
             headers={"Authorization": f"Bearer {self.token}"},
             json={
