@@ -1,9 +1,10 @@
 import re
 import requests
 
+IP_ADDRESS_PATTERN = r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
+
 def is_ip_address(value):
-  pattern = r'^(\d{1,3}\.){3}\d{1,3}$'
-  return re.match(pattern, value) is not None
+  return re.match(IP_ADDRESS_PATTERN, value) is not None
 
 def get_ip_address():
   """Get the ip address of the host machine."""
