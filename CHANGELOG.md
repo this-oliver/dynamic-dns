@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/this-oliver/dynamic-dns/compare/v1.1.0...v1.2.0) (2026-03-26)
+
+
+### Features
+
+* configure logs ([#16](https://github.com/this-oliver/dynamic-dns/issues/16)) ([16693fd](https://github.com/this-oliver/dynamic-dns/commit/16693fdc323cb7be48953d36d712a30fb69dd11b))
+
 ## [1.1.0](https://github.com/this-oliver/dynamic-dns/compare/v1.0.0...v1.1.0) (2026-03-24)
 
 
