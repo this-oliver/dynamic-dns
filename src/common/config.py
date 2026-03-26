@@ -1,9 +1,10 @@
+import os
 import yaml
 from src.common.record import Record
 
 class Config:
     """Class representing the configuration loaded from the YAML file."""
-    def __init__(self, records):
+    def __init__(self, records: list[Record]):
         self.records = records
 
 def parse_config(config_path):

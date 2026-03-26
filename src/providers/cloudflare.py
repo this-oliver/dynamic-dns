@@ -1,6 +1,7 @@
 import time
 import requests
-from ..common.provider import Provider, UpdateResult
+from ..common.record import Record
+from ..common.provider import Provider
 
 BASE_URL="https://api.cloudflare.com/client/v4"
 
@@ -80,7 +81,7 @@ class CloudflareProvider(Provider):
                         return r 
         return None
     
-    def update_dns_record(self, record: CloudflareApiRecord, ip_address: str) -> dict:
+    def update_dns_record(self, record: CloudflareApiRecord, ip_address: str) -> Record:
         """Update the DNS record in Cloudflare with the new IP address."""
         cloudflare_record = self._get_single_dns_record(record)
         if not cloudflare_record:
@@ -100,4 +101,7 @@ class CloudflareProvider(Provider):
         )
         if res.status_code != 200:
             raise Exception(f"Failed to update DNS record in Cloudflare: {res.text}")
-        return UpdateResult(provider=self.name, old_ip=cloudflare_record.content, new_ip=ip_address)
+        record.old_ip = cloudflare_record.content
+        record.new_ip = ip_address
+        record.updated = True
+        return record

@@ -10,3 +10,6 @@ class Record:
         self.token = token
         if self.provider == 'cloudflare' and not self.token:
             raise ValueError("Cloudflare token is required for Cloudflare records.")
+        self.old_ip = None
+        self.new_ip = None
+        self.updated = False
