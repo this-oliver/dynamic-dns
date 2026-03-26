@@ -44,7 +44,12 @@ def main():
         parser.print_help()
         return
     
-    ip_address = get_ip_address()
+    try:
+        ip_address = get_ip_address()
+        logger.info(f"Current IP address: {ip_address}")
+    except Exception as e:
+        logger.error(e)
+        return
 
     for record in config.records:
         try:

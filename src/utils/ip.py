@@ -8,8 +8,21 @@ def is_ip_address(value):
 
 def get_ip_address():
   """Get the ip address of the host machine."""
-  res = requests.get('https://api.ipify.org')
-  if res.status_code == 200:
-    ip = res.text.strip()
-    if is_ip_address(ip):
-      return ip
+  try:
+      res = requests.get('https://api.ipify.org')
+      res.raise_for_status()
+      if res.status_code == 200:
+        ip = res.text.strip()
+        if is_ip_address(ip):
+          return ip
+  except requests.exceptions.ConnectionError as e:
+      message = f"Connection failed likely due to timeout - {e}."
+      raise Exception(message)
+  except requests.RequestException as e:
+      if hasattr(e, 'response') and e.response is not None:
+        status_code = e.response.status_code
+        message = f"({status_code}) Failed to fetch IP address - {e.response.reason}"
+      raise Exception(e)
+  except Exception as e:
+      message = f"Failed to fetch IP address - {e}"
+      raise Exception(message)
