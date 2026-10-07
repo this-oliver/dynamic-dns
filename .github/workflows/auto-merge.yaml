@@ -41,4 +41,4 @@ jobs:
           # - [content:write] for merging pull requests
           # - [workflow:write] for updating deps in workflows
           GH_TOKEN: ${{ secrets.AUTO_MERGE_TOKEN }}
-          REPO: "$REPO"
+          REPO: ${{ github.repository }}
