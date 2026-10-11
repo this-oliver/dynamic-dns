@@ -43,10 +43,10 @@ class CloudflareProvider(Provider):
         """Validate that the record has all necessary information."""
         if record.provider.lower() != 'cloudflare':
             raise ValueError("Invalid provider for CloudflareProvider. Expected 'cloudflare'.")
-        if not record.token:
-            raise ValueError("Cloudflare token is required for Cloudflare records.")
-        if not record.domain_name:
+        if not record.domain:
             raise ValueError("Domain name is required for Cloudflare records.")
+        if not record.token:
+            raise ValueError("Token is required for Cloudflare records.")
         return True
     
     def _get_zones(self):
@@ -69,23 +69,21 @@ class CloudflareProvider(Provider):
             raise Exception(f"Failed to fetch DNS records from Cloudflare: {res.text}")
         return [CloudflareApiRecord(id=record['id'], zone=zone_id, type=record['type'], name=record['name'], content=record['content'], ttl=record['ttl'], proxied=record['proxied']) for record in res.json().get('result', [])]
 
-    def _get_single_dns_record(self, record):
+    def _get_single_dns_record(self, record: Record) -> CloudflareApiRecord:
         """Fetch the DNS record from Cloudflare."""
         self._is_valid_record(record)
         zones = self._get_zones()
         for zone in zones:
-            if record.domain_name.endswith(zone.name):
+            if record.domain.endswith(zone.name):
                 records = self._get_all_dns_records(zone.id)
                 for r in records:
-                    if r.name == record.domain_name:
+                    if r.name == record.domain:
                         return r 
-        return None
+        raise Exception(f"DNS record for {record.domain} not found.")
     
-    def update_dns_record(self, record: CloudflareApiRecord, ip_address: str) -> Record:
+    def update_dns_record(self, record: Record, ip_address: str) -> Record:
         """Update the DNS record in Cloudflare with the new IP address."""
         cloudflare_record = self._get_single_dns_record(record)
-        if not cloudflare_record:
-            raise Exception(f"DNS record for {record.domain_name} not found in ${self.name}.")
         if cloudflare_record.type != 'A':
             raise Exception(f"DNS record type {cloudflare_record.type} is not supported for ip address updates. Only 'A' records can be updated with an IP address.")
         res = requests.patch(
@@ -104,4 +102,5 @@ class CloudflareProvider(Provider):
         record.old_ip = cloudflare_record.content
         record.new_ip = ip_address
         record.updated = True
+
         return record
