@@ -17,21 +17,32 @@ Prerequisites:
 
 - Python 3.12 or higher
 
+Install dependencies:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install -r requirements.txt
+```
+
 ## Usage
 
 Dynamic DNS can be used with a configuration file or directly via command line arguments.
 
 ```bash
-usage: main.py [-h] [--config CONFIG] [--provider PROVIDER] [--token TOKEN] [--domain DOMAIN]
+python3 -m src.main --help
 
-Update DNS records with current IP address.
-
-options:
-  -h, --help           show this help message and exit
-  --config CONFIG      Path to the configuration YAML file
-  --provider PROVIDER  DNS provider name (e.g., cloudflare)
-  --token TOKEN        API token for the DNS provider
-  --domain DOMAIN      Domain name to update
+# usage: main.py [-h] [--log LOG] [--config CONFIG] [--provider PROVIDER] [--token TOKEN] [--domain DOMAIN]
+# 
+# Update DNS records with current IP address.
+# 
+# options:
+#   -h, --help           show this help message and exit
+#   --log LOG            Log update operations to the specified log file (Default: /Users/oliver/Studio/code/wip/dynamic-dns/dynamic_dns.log)
+#   --config CONFIG      Path to the configuration YAML file
+#   --provider PROVIDER  DNS provider name (e.g., cloudflare)
+#   --token TOKEN        API token for the DNS provider
+#   --domain DOMAIN      Domain name to update
 ```
 
 Currently, `dynamic-dns` supports the following DNS providers:
@@ -95,7 +106,10 @@ docker build -t ghcr.io/this-oliver/dynamic-dns:local .
 Run the container:
 
 ```bash
-docker run -d -v /path/to/config.yaml:/app/config.yaml ghcr.io/this-oliver/dynamic-dns:v1.0.0@sha256:01e32dc8587aadb8a769502f7b49fea661939d059d6ceed7034ef2986fa24170 --config /app/config.yaml
+docker run ghcr.io/this-oliver/dynamic-dns:latest --provider cloudflare --token <API_TOKEN> --domain example.com
+
+# using config file
+docker run -v /path/to/config.yaml:/app/config.yaml ghcr.io/this-oliver/dynamic-dns:latest --config /app/config.yaml
 ```
 
 ## Practical Use Cases
