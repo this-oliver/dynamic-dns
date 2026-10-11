@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.3](https://github.com/this-oliver/dynamic-dns/compare/v1.2.2...v1.2.3) (2026-10-11)
+
+
+### Bug Fixes
+
+* fetching ip did not fail when ip was missing or invalid ([#53](https://github.com/this-oliver/dynamic-dns/issues/53)) ([b38d2ab](https://github.com/this-oliver/dynamic-dns/commit/b38d2ab56789c4c3a85cb840438d5194e3fcb369))
+* unable to parse config's domains ([#52](https://github.com/this-oliver/dynamic-dns/issues/52)) ([80b4fef](https://github.com/this-oliver/dynamic-dns/commit/80b4fef9b1e2de1aa22c1defefbc447ddad8eb19))
+
 ## [1.2.2](https://github.com/this-oliver/dynamic-dns/compare/v1.2.1...v1.2.2) (2026-10-11)
 
 
