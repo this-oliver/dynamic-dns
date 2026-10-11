@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/this-oliver/dynamic-dns/compare/v1.2.0...v1.2.1) (2026-10-08)
+
+
+### Bug Fixes
+
+* **cicd:** build for arm 6 and 7 ([904115a](https://github.com/this-oliver/dynamic-dns/commit/904115a7071226ebe878f56e6a0fbc24b41eeb0a))
+* **perf:** uses slimmer python image ([6e6cf66](https://github.com/this-oliver/dynamic-dns/commit/6e6cf665b9615e6d924d836049d9187386e9a89b))
+
 ## [1.2.0](https://github.com/this-oliver/dynamic-dns/compare/v1.1.0...v1.2.0) (2026-03-26)
 
 
