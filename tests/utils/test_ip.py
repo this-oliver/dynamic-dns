@@ -1,3 +1,4 @@
+import pytest
 from unittest.mock import patch, MagicMock
 from src.utils.ip import is_ip_address, get_ip_address
 
@@ -25,11 +26,13 @@ def test_get_ip_address_invalid_ip(mock_get):
     mock_response.status_code = 200
     mock_response.text = "invalid-ip\n"
     mock_get.return_value = mock_response
-    assert get_ip_address() is None
+    with pytest.raises(Exception):
+      get_ip_address() 
 
 @patch('src.utils.ip.requests.get')
 def test_get_ip_address_non_200_status(mock_get):
     mock_response = MagicMock()
     mock_response.status_code = 404
     mock_get.return_value = mock_response
-    assert get_ip_address() is None
+    with pytest.raises(Exception):
+      get_ip_address()
