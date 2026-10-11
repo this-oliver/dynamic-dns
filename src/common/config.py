@@ -1,4 +1,3 @@
-import os
 import yaml
 from src.common.record import Record
 

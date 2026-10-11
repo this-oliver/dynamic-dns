@@ -45,7 +45,7 @@ class CloudflareProvider(Provider):
             raise ValueError("Invalid provider for CloudflareProvider. Expected 'cloudflare'.")
         if not record.token:
             raise ValueError("Cloudflare token is required for Cloudflare records.")
-        if not record.domain_name:
+        if not record.domain:
             raise ValueError("Domain name is required for Cloudflare records.")
         return True
     
@@ -74,10 +74,10 @@ class CloudflareProvider(Provider):
         self._is_valid_record(record)
         zones = self._get_zones()
         for zone in zones:
-            if record.domain_name.endswith(zone.name):
+            if record.domain.endswith(zone.name):
                 records = self._get_all_dns_records(zone.id)
                 for r in records:
-                    if r.name == record.domain_name:
+                    if r.name == record.domain:
                         return r 
         return None
     
@@ -85,7 +85,7 @@ class CloudflareProvider(Provider):
         """Update the DNS record in Cloudflare with the new IP address."""
         cloudflare_record = self._get_single_dns_record(record)
         if not cloudflare_record:
-            raise Exception(f"DNS record for {record.domain_name} not found in ${self.name}.")
+            raise Exception(f"DNS record for {record.domain} not found in ${self.name}.")
         if cloudflare_record.type != 'A':
             raise Exception(f"DNS record type {cloudflare_record.type} is not supported for ip address updates. Only 'A' records can be updated with an IP address.")
         res = requests.patch(

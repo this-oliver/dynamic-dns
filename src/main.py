@@ -37,7 +37,7 @@ def main():
         if args.provider.lower() == 'cloudflare' and not args.token:
             logger.error("Cloudflare token is required when using Cloudflare provider.")
             return
-        record = Record(provider=args.provider, domain_name=args.domain, token=args.token)
+        record = Record(provider=args.provider, domain=args.domain, token=args.token)
         config = Config(records=[record])
     else:
         logger.error("No valid configuration provided. Please specify either a config file or domain with records to update.")
@@ -56,11 +56,11 @@ def main():
             if record.provider.lower() == 'cloudflare':
                 provider = CloudflareProvider(token=record.token)
                 result = provider.update_dns_record(record, ip_address)
-                logger.info(f"Successfully updated {record.domain_name} from {result.old_ip} to {result.new_ip} in {record.provider} DNS provider.")
+                logger.info(f"Successfully updated {record.domain} from {result.old_ip} to {result.new_ip} in {record.provider} DNS provider.")
             else:
-                logger.error(f"Failed to update {record.domain_name}: Unsupported provider {record.provider}")
+                logger.error(f"Failed to update {record.domain}: Unsupported provider {record.provider}")
         except Exception as e:
-            logger.error(f"Failed to update {record.domain_name} in {record.provider} DNS provider: {str(e)}")
+            logger.error(f"Failed to update {record.domain} in {record.provider} DNS provider: {str(e)}")
 
 
 if __name__ == "__main__":
