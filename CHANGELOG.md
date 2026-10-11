@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/this-oliver/dynamic-dns/compare/v1.2.1...v1.2.2) (2026-10-11)
+
+
+### Bug Fixes
+
+* container image lacking ownership/permissions ([#49](https://github.com/this-oliver/dynamic-dns/issues/49)) ([197b29e](https://github.com/this-oliver/dynamic-dns/commit/197b29ec3b96150a2d9ade224a470035d9bd9450))
+
 ## [1.2.1](https://github.com/this-oliver/dynamic-dns/compare/v1.2.0...v1.2.1) (2026-10-08)
 
 
